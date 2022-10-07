@@ -106,7 +106,7 @@ createTimeblocks()
  * Sets the hours array to the array saved in local storage.
  */
 function setEvents() {
-  if (hours) {
+  if (localStorage.getItem('myHours')) {
     hours = JSON.parse(localStorage.getItem('myHours'))
   }
 }
