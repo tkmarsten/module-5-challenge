@@ -51,6 +51,8 @@ function setHeaderDate() {
   $('#currentDay').text(currentDay)
 }
 
+setHeaderDate()
+
 /**
  * Creates the timeblocks for the scheduler.
  * Each timeblock includes the hour, the editable event and the save button.
@@ -98,14 +100,15 @@ function createTimeblocks() {
   }
 }
 
-setHeaderDate()
 createTimeblocks()
 
 /**
  * Sets the hours array to the array saved in local storage.
  */
 function setEvents() {
-  hours = JSON.parse(localStorage.getItem('myHours'))
+  if (hours) {
+    hours = JSON.parse(localStorage.getItem('myHours'))
+  }
 }
 
 /**
