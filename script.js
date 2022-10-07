@@ -1,7 +1,7 @@
 /**
- * Array containing the 
+ * Array containing the hours of the schedule and the events for each hour
  */
-const hours = [
+let hours = [
   {
     hour: 9,
     event: ''
@@ -40,13 +40,21 @@ const hours = [
   }
 ]
 
+setEvents()
 
-function setHeader() {
+/**
+ * Sets the current date in the header.
+ */
+function setHeaderDate() {
   let currentDay = moment().format('dddd, MMMM Do')
   $('#currentDay').text(currentDay)
 }
 
-function setReminders() {
+/**
+ * Creates the timeblocks for the scheduler.
+ * Each timeblock includes the hour, the editable event and the save button.
+ */
+function createTimeblocks() {
   for (let i = 0; i < hours.length; i++) {
     let rowDiv = $('<form>')
       .attr('class', 'row')
@@ -84,14 +92,32 @@ function setReminders() {
 
     buttonDiv.append(buttonIcon)
     rowDiv.append(buttonDiv)
+
+    textDiv.val(hours[i].event)
   }
 }
 
-setHeader()
-setReminders()
+setHeaderDate()
+createTimeblocks()
 
+/**
+ * Sets the hours array to the array saved in local storage.
+ */
+function setEvents() {
+  hours = JSON.parse(localStorage.getItem('myHours'))
+}
+
+/**
+ * Listener for the save button for each row.
+ * Saves the event to local storage on click.
+ */
 $('.saveBtn').on('click', function (event) {
   event.preventDefault()
-  index = $(this).siblings('.description').children('.future').attr('id')
-
+  index = $(this).siblings('.description').children('.past').attr('id')
+  for (let i = 0; i < hours.length; i++) {
+    if (hours[i].hour === parseInt(index)) {
+      hours[i].event = $(this).siblings('.description').children('.past').val()
+    }
+  }
+  localStorage.setItem('myHours', JSON.stringify(hours))
 })
