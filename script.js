@@ -1,5 +1,6 @@
 /**
- * Array containing the hours of the schedule and the events for each hour
+ * Array containing the hours of the schedule and the events for each hour.
+ * Hours are in 24 hour format.
  */
 let hours = [
   {
@@ -113,10 +114,10 @@ function setEvents() {
  */
 $('.saveBtn').on('click', function (event) {
   event.preventDefault()
-  index = $(this).siblings('.description').children('.past').attr('id')
+  index = $(this).siblings('.description').children('.future').attr('id')
   for (let i = 0; i < hours.length; i++) {
     if (hours[i].hour === parseInt(index)) {
-      hours[i].event = $(this).siblings('.description').children('.past').val()
+      hours[i].event = $(this).siblings('.description').children('.future').val()
     }
   }
   localStorage.setItem('myHours', JSON.stringify(hours))
